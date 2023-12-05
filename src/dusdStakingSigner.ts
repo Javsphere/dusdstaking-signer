@@ -2,10 +2,10 @@ import { WalletClassic } from '@defichain/jellyfish-wallet-classic';
 import { WIF } from '@defichain/jellyfish-crypto';
 import { WhaleWalletAccount } from '@defichain/whale-api-wallet';
 import { ethers, providers } from 'ethers';
-import MultisigWallet from '@libs/dmc/MultiSigWallet.json';
+import MultisigWallet from 'src/libs/dmc/MultiSigWallet.json';
 import { WhaleApiClient } from '@defichain/whale-api-client';
 import { TestNet } from '@defichain/jellyfish-network';
-import DST20_V1 from '@libs/dmc/DST20_V1.json';
+import DST20_V1 from 'src/libs/dmc/DST20_V1.json';
 import {
   AccountToAccount,
   CAccountToAccount,
@@ -26,7 +26,7 @@ import {
   TransactionSigner,
 } from '@defichain/jellyfish-transaction-signature';
 import { SmartBuffer } from 'smart-buffer';
-import { SignPackageMultisig } from '@libs/types/blockchain.types';
+import { SignPackageMultisig } from 'src/libs/types/blockchain.types';
 import {
   CWithdrawFromVault,
   WithdrawFromVault,

@@ -45,7 +45,7 @@ export interface jobDataBuy {
   addressBuyer: string;
   dusdAmount: string;
 }
-export interface evmMultisig {
+export interface EvmMultisig {
   randomId: string;
   transactionId: string;
 }

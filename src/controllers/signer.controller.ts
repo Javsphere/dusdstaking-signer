@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import {evmMultisig, SignedTXsPackage, SignTXsPackage} from "@libs/types/blockchain.types";
+import {EvmMultisig, SignedTXsPackage, SignTXsPackage} from "src/libs/types/blockchain.types";
 import {
   confirmEvmMultisigTransactionTransfer,
   confirmEVMMultisigTransacton,
@@ -7,7 +7,7 @@ import {
 } from "../dusdStakingSigner";
 
 
-export const confirmEvmTranferHandler: RequestHandler<unknown,  unknown, evmMultisig>
+export const confirmEvmTranferHandler: RequestHandler<unknown,  unknown, EvmMultisig>
     = async (req, res, next) => {
   try {
 
@@ -25,7 +25,7 @@ export const confirmEvmTranferHandler: RequestHandler<unknown,  unknown, evmMult
   }
 };
 
-export const confirmEvmHandler: RequestHandler<unknown,  unknown, evmMultisig>
+export const confirmEvmHandler: RequestHandler<unknown,  unknown, EvmMultisig>
     = async (req, res, next) => {
   try {
 
