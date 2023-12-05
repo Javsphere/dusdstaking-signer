@@ -6,7 +6,6 @@ import {
   signTxs
 } from "../dusdStakingSigner";
 
-
 export const confirmEvmTranferHandler: RequestHandler<unknown,  unknown, EvmMultisig>
     = async (req, res, next) => {
   try {

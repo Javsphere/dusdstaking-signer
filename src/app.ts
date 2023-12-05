@@ -3,6 +3,7 @@ import {confirmEvmHandler, confirmEvmTranferHandler, signTxsHandler} from "./con
 import AppError from "./utils/appError";
 import events from "events";
 import bodyParser from "body-parser";
+import cors from 'cors';
 
 const errorHander: ErrorRequestHandler = (error: AppError, _req, res, next) => {
     if (res.headersSent) {
@@ -31,6 +32,8 @@ declare module 'http' {
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(cors());
 
 events.EventEmitter.defaultMaxListeners = 100;
 

@@ -32,6 +32,7 @@ import {
   WithdrawFromVault,
 } from '@defichain/jellyfish-transaction/dist/script/dftx/dftx_vault';
 import { CTakeLoan } from '@defichain/jellyfish-transaction/dist/script/dftx/dftx_loans';
+import 'dotenv/config';
 
 const multiSigAddress2 = 'tf1qkm5y2xahw6ht5v449xna3fwulutfkstx89pn0s';
 const rpc = 'https://dmc.mydefichain.com/testnet';
@@ -59,7 +60,7 @@ export async function confirmEvmMultisigTransactionTransfer(
   randomId: string,
   transactionId: string
 ) {
-  const priv2 = process.env.privKey!;
+  const priv2 = process.env.PRIV_KEY!;
   const wallet2 = new WalletClassic(WIF.asEllipticPair(priv2));
   const account2 = new WhaleWalletAccount(ocean, wallet2, network);
   const secondOwnerWallet = new ethers.Wallet(
@@ -117,7 +118,7 @@ export async function confirmEVMMultisigTransacton(
   ocean = getTestWhaleClient();
   const evmProvider = new providers.JsonRpcProvider(rpc);
 
-  const priv2 = process.env.privKey!;
+  const priv2 = process.env.PRIV_KEY!;
   const wallet2 = new WalletClassic(WIF.asEllipticPair(priv2));
   const account2 = new WhaleWalletAccount(ocean, wallet2, network);
   const secondOwnerWallet = new ethers.Wallet(
@@ -148,7 +149,7 @@ export async function signTxs(
   prevPubKey: string,
   redeemScript: string
 ): Promise<CTransactionSegWit[]> {
-  const priv = process.env.privKey!;
+  const priv = process.env.PRIV_KEY!;
 
   const allowedTargets = [
     'tf1q5hf30t5yxp5avzh2mw0yccwtvjqy5l2f3seyc4',
