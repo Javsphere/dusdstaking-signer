@@ -50,19 +50,24 @@ export interface EvmMultisig {
   transactionId: string;
 }
 
-export interface SignPackageMultisig {
-  transaction: CTransactionSegWit;
-  prevout: Prevout;
-}
-
 export interface SignTXsPackage {
-  transactions: SignPackageMultisig[],
+  transactions: SignPackageMultisigTransport[],
   prevPubKey: string,
   redeemScript: string
 }
 
 export interface SignedTXsPackage {
-  transactions: CTransactionSegWit[],
+  transactions: string[],
+}
+
+export interface SignPackageMultisig {
+  transaction: CTransactionSegWit;
+  prevout: Prevout;
+}
+
+export interface SignPackageMultisigTransport {
+  transaction: string;
+  prevout: Prevout;
 }
 
 

@@ -19,6 +19,7 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "@defichain/jellyfish-buffer": "^4.0.5",
     "@defichain/jellyfish-wallet-classic": "^4.0.5",
     "@defichain/whale-api-wallet": "^4.0.5",
     "bignumber.js": "^9.1.2",

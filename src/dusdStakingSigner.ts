@@ -26,13 +26,14 @@ import {
   TransactionSigner,
 } from '@defichain/jellyfish-transaction-signature';
 import { SmartBuffer } from 'smart-buffer';
-import { SignPackageMultisig } from 'src/libs/types/blockchain.types';
+import {SignPackageMultisig, SignPackageMultisigTransport} from 'src/libs/types/blockchain.types';
 import {
   CWithdrawFromVault,
   WithdrawFromVault,
 } from '@defichain/jellyfish-transaction/dist/script/dftx/dftx_vault';
 import { CTakeLoan } from '@defichain/jellyfish-transaction/dist/script/dftx/dftx_loans';
 import 'dotenv/config';
+import {BigNumber} from "@defichain/jellyfish-api-core";
 
 const multiSigAddress2 = 'tf1qkm5y2xahw6ht5v449xna3fwulutfkstx89pn0s';
 const rpc = 'https://dmc.mydefichain.com/testnet';
@@ -145,11 +146,20 @@ export async function confirmEVMMultisigTransacton(
 }
 
 export async function signTxs(
-  transactions: SignPackageMultisig[],
+  transactionsTransport: SignPackageMultisigTransport[],
   prevPubKey: string,
   redeemScript: string
-): Promise<CTransactionSegWit[]> {
+): Promise<string[]> {
   const priv = process.env.PRIV_KEY!;
+
+  const transactions: SignPackageMultisig [] = [];
+
+  for (const rawTx of transactionsTransport) {
+    const txn = new CTransactionSegWit(SmartBuffer.fromBuffer(Buffer.from(rawTx.transaction, 'hex')));
+    const prevout = rawTx.prevout;
+    prevout.value = new BigNumber(rawTx.prevout.value)
+    transactions.push({transaction: txn, prevout })
+  }
 
   const allowedTargets = [
     'tf1q5hf30t5yxp5avzh2mw0yccwtvjqy5l2f3seyc4',
@@ -186,7 +196,7 @@ export async function signTxs(
     }
   });
 
-  const signedTxs = [];
+  const signedTxs: string [] = [];
 
   for (const tx of transactions) {
     const witnesses = [];
@@ -205,14 +215,14 @@ export async function signTxs(
       witnesses
     );
     const ctx = new CTransactionSegWit(signed);
-    signedTxs.push(ctx);
+    signedTxs.push(ctx.toHex());
   }
 
   return signedTxs;
 }
 
 async function getWittness(
-  transaction: Transaction,
+  transaction: CTransactionSegWit,
   prevout: Prevout,
   pubKey: string,
   privKey: string,
