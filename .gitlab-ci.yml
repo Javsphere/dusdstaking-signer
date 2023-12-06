@@ -58,11 +58,11 @@ deploy-signer:
     - docker:dind
   before_script:
     - mkdir -p ~/.ssh
-    - echo "$DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - echo "$DEPLOY_KEY_SIGNER" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - eval "$(ssh-agent -s)"
     - ssh-add ~/.ssh/id_rsa
-    - ssh-keyscan -H $PROD_SERVER >> ~/.ssh/known_hosts
+    - ssh-keyscan -H $PROD_SERVER_SIGNER >> ~/.ssh/known_hosts
   script:
     - sshpass -p $SSH_SIGNER ssh igor@$PROD_SERVER_SIGNER "cd docker/dusd-staking-signer && docker login -u $REGISTRY_LOGIN -p $REGISTRY_KEY registry.gitlab.com && ./deploy.sh && exit"
   only:
