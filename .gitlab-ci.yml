@@ -27,7 +27,7 @@ production_build:
     policy: pull
   only:
     - tags
-    - master
+    - main
 
 # deploy to server
 deploy:
