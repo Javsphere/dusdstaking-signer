@@ -64,6 +64,6 @@ deploy-signer:
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H $PROD_SERVER >> ~/.ssh/known_hosts
   script:
-    - sshpass -p $SSH_SIGNER ssh igor@$PROD_SERVER "cd docker/dusd-staking-signer && docker login -u $REGISTRY_LOGIN -p $REGISTRY_KEY registry.gitlab.com && ./deploy.sh && exit"
+    - sshpass -p $SSH_SIGNER ssh igor@$PROD_SERVER_SIGNER "cd docker/dusd-staking-signer && docker login -u $REGISTRY_LOGIN -p $REGISTRY_KEY registry.gitlab.com && ./deploy.sh && exit"
   only:
     - tags
