@@ -1,0 +1,50 @@
+image: docker:latest
+
+stages:
+  - build
+  - deploy
+
+variables:
+  CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}_${CI_COMMIT_SHORT_SHA}
+  CONTAINER_IMAGE_STAGING: ${CI_REGISTRY}/${CI_PROJECT_PATH}:staging
+  CONTAINER_IMAGE_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}:latest
+  CONTAINER_IMAGE_STAGING_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}:staging__${CI_BUILD_REF}
+
+production_build:
+  stage: build
+  image: docker:stable
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CONTAINER_IMAGE_LATEST -t $CONTAINER_IMAGE_LATEST -t $CONTAINER_IMAGE .
+    - docker push $CONTAINER_IMAGE
+    - docker push $CONTAINER_IMAGE_LATEST
+  cache:
+    key: "docker"
+    policy: pull
+  only:
+    - tags
+    - master
+
+# deploy to server
+deploy:
+  stage: deploy
+  dependencies:
+    - production_build
+  image: ictu/sshpass:latest
+  services:
+    - docker:dind
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H $PROD_SERVER >> ~/.ssh/known_hosts
+  script:
+    - sshpass -p $LOGIN_KEY ssh igor@$PROD_SERVER "cd docker/Privat/dusd-staking-signer && docker login -u $REGISTRY_LOGIN -p $REGISTRY_KEY registry.gitlab.com && ./deploy.sh && exit"
+  only:
+    - tags
