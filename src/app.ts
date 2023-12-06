@@ -5,20 +5,6 @@ import events from "events";
 import bodyParser from "body-parser";
 import cors from 'cors';
 
-const errorHander: ErrorRequestHandler = (error: AppError, _req, res, next) => {
-    if (res.headersSent) {
-        return next(error);
-    }
-
-    error.status = error.status || 'error';
-    error.statusCode = error.statusCode || 500;
-
-    res.status(error.statusCode).json({
-        status: error.status,
-        message: error.message,
-    });
-};
-
 const app = express();
 const router = express.Router();
 const port = 3000;
@@ -38,21 +24,18 @@ app.use(cors());
 events.EventEmitter.defaultMaxListeners = 100;
 
 app.get('/', (req, res) => {
-    res.send('Ready');
+    res.send({
+        "status": 'Ready'
+    });
 });
 
 app.get('/health', (req, res) => {
-    res.send('Ready');
+    res.send({
+        "status": 'Ready'
+    });
 });
-
-// GLOBAL ERROR HANDLER
-app.use(errorHander);
 
 app.use('/api', router);
-
-app.all('*', (req, _res, next) => {
-    next(new AppError(404, `Route ${req.originalUrl} not found`));
-});
 
 router.post('/confirmEvmTranfer', confirmEvmTranferHandler);
 
