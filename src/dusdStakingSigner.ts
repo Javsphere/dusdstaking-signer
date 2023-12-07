@@ -98,7 +98,7 @@ export async function confirmEvmMultisigTransactionTransfer(
   const toAddressDusdValue = ethers.utils.formatEther(decoded[1]);
 
   console.info(
-    `${randomId} Transaction Details - To: ${toAddress}, Value: ${toAddressDusdValue}`
+    ` ${new Date().toString()} ${randomId} Transaction Details - To: ${toAddress}, Value: ${toAddressDusdValue}`
   );
 
   // Confirm the correct target address
@@ -112,11 +112,11 @@ export async function confirmEvmMultisigTransactionTransfer(
     overrides
   );
   console.info(
-    `${randomId} Confirmation Transaction sent with hash: ${txResponse2.hash}`
+    ` ${new Date().toString()} ${randomId} Confirmation Transaction sent with hash: ${txResponse2.hash}`
   );
   await txResponse2.wait();
   console.info(
-    `${randomId} Transaction confirmed with hash: ${txResponse2.hash}`
+    ` ${new Date().toString()} ${randomId} Transaction confirmed with hash: ${txResponse2.hash}`
   );
 }
 
@@ -145,11 +145,11 @@ export async function confirmEVMMultisigTransacton(
       overrides
   );
   console.info(
-      `${randomId} Confirmation Transaction sent with hash: ${txResponse.hash}`
+      ` ${new Date().toString()} ${randomId} Confirmation Transaction sent with hash: ${txResponse.hash}`
   );
   await txResponse.wait();
   console.info(
-      `${randomId} Transaction confirmed with hash: ${txResponse.hash}`
+      ` ${new Date().toString()} ${randomId} Transaction confirmed with hash: ${txResponse.hash}`
   );
 }
 
