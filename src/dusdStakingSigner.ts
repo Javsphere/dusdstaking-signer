@@ -38,7 +38,7 @@ import {BigNumber} from "@defichain/jellyfish-api-core";
 const multiSigAddress2 = 'tf1qkm5y2xahw6ht5v449xna3fwulutfkstx89pn0s';
 const rpc = 'https://dmc.mydefichain.com/testnet';
 const multisigWalletSCAddress = '0x55e762e808745C2fa6FbC751653e14A8B9e7aDd4';
-const dusdStakingSCAddress = '0xFE3883cC1f53964b4Ab17b3c46EE8CC18B7Bf157';
+const dusdStakingSCAddress = '0x16AD8BC8ed24481fEBEde9BE128ad80243942E28';
 const dusdTokenAddress = '0xFF0000000000000000000000000000000000000B';
 const multiSigAddress =
   'tf1qtrf6nrttse02e2687aqml6l4lmdg599tsmhq29ey4aj05fzdetrsswzjv2';
