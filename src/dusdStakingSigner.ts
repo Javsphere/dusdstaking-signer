@@ -37,19 +37,27 @@ import {BigNumber} from "@defichain/jellyfish-api-core";
 
 const multiSigAddress2 = 'tf1qkm5y2xahw6ht5v449xna3fwulutfkstx89pn0s';
 const rpc = 'https://dmc.mydefichain.com/testnet';
-const multisigWalletSCAddress = '0x2A9f89782B7d3c14a6D5b253c2E059e3572716dc';
-const dusdStakingSCAddress = '0xdB476F0C4Bc8Ced2F5d02af84fce5B1FF84039fe';
+const multisigWalletSCAddress = '0x55e762e808745C2fa6FbC751653e14A8B9e7aDd4';
+const dusdStakingSCAddress = '0xFE3883cC1f53964b4Ab17b3c46EE8CC18B7Bf157';
 const dusdTokenAddress = '0xFF0000000000000000000000000000000000000B';
 const multiSigAddress =
   'tf1qtrf6nrttse02e2687aqml6l4lmdg599tsmhq29ey4aj05fzdetrsswzjv2';
+
+const transferDomainAddress = "tf1qmwl3z8dw3ljq7q729mut8fu0m24p8ncz8f46sx";
+const transferDomainAddressEVM = "0x2683f524C6477a3D84c6d1492a1b51e0B4146d36";
 
 const overrides = {
   gasLimit: ethers.BigNumber.from('3000000'),
 };
 
 const allowedTargetsForTransfer = [
-  '0x64F67fdC8c237004794090AE541581932E9A622E',
+  transferDomainAddressEVM,
   dusdStakingSCAddress,
+];
+
+const allowedTargetsDVM = [
+  transferDomainAddress,
+  multiSigAddress,
 ];
 
 const evmProvider = new providers.JsonRpcProvider(rpc);
@@ -161,10 +169,6 @@ export async function signTxs(
     transactions.push({transaction: txn, prevout })
   }
 
-  const allowedTargets = [
-    'tf1q5hf30t5yxp5avzh2mw0yccwtvjqy5l2f3seyc4',
-    multiSigAddress,
-  ];
 
   const allowedOpCodes = [
     'OP_DEFI_TX_DEPOSIT_TO_VAULT',
@@ -186,7 +190,7 @@ export async function signTxs(
 
   let verified = true;
   transactions.forEach((tx) => {
-    verified = verifyTargetAddresses(tx.transaction, allowedTargets);
+    verified = verifyTargetAddresses(tx.transaction, allowedTargetsDVM);
 
     if (!verified) {
       const errorMessage = `Error in verify DVM transaction ${JSON.stringify(
