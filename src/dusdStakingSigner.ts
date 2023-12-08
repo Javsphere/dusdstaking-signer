@@ -48,6 +48,7 @@ const transferDomainAddressEVM = "0x2683f524C6477a3D84c6d1492a1b51e0B4146d36";
 
 const overrides = {
   gasLimit: ethers.BigNumber.from('3000000'),
+  gasPrice: ethers.utils.parseUnits('50', 'gwei')
 };
 
 const allowedTargetsForTransfer = [
@@ -112,11 +113,11 @@ export async function confirmEvmMultisigTransactionTransfer(
     overrides
   );
   console.info(
-    ` ${new Date().toString()} ${randomId} Confirmation Transaction sent with hash: ${txResponse2.hash}`
+    ` ${new Date().toString()} ${randomId} Confirmation Transaction ${transactionId}  sent with hash: ${txResponse2.hash}`
   );
   await txResponse2.wait();
   console.info(
-    ` ${new Date().toString()} ${randomId} Transaction confirmed with hash: ${txResponse2.hash}`
+    ` ${new Date().toString()} ${randomId} Transaction ${transactionId}  confirmed with hash: ${txResponse2.hash}`
   );
 }
 
@@ -145,11 +146,11 @@ export async function confirmEVMMultisigTransacton(
       overrides
   );
   console.info(
-      ` ${new Date().toString()} ${randomId} Confirmation Transaction sent with hash: ${txResponse.hash}`
+      ` ${new Date().toString()} ${randomId} Confirmation Transaction ${transactionId} sent with hash: ${txResponse.hash}`
   );
   await txResponse.wait();
   console.info(
-      ` ${new Date().toString()} ${randomId} Transaction confirmed with hash: ${txResponse.hash}`
+      ` ${new Date().toString()} ${randomId} Transaction ${transactionId}  confirmed with hash: ${txResponse.hash}`
   );
 }
 

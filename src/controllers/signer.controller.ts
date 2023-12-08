@@ -29,7 +29,7 @@ export const confirmEvmHandler: RequestHandler<unknown,  unknown, EvmMultisig>
   try {
 
     const { randomId, transactionId } = req.body;
-    console.log(` ${new Date().toString()} ${randomId} Start signing ${transactionId}  with confirmEVMMultisigTransacton ... `)
+    console.log(` ${new Date().toString()} ${randomId} Start signing ${transactionId} with confirmEVMMultisigTransacton ... `)
     await confirmEVMMultisigTransacton(randomId, transactionId);
     console.log(` ${new Date().toString()} ${randomId} Signing with ${transactionId}  confirmEVMMultisigTransacton ready. `)
 
