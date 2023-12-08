@@ -4,6 +4,7 @@ import events from "events";
 import cors from 'cors';
 import httpLogger from "./utils/httpLogger";
 import logger from "./utils/logger";
+import process from "process";
 
 const app = express();
 const router = express.Router();
@@ -47,5 +48,5 @@ router.post('/confirmEvm', confirmEvmHandler);
 router.post('/signTxs', signTxsHandler);
 
 app.listen(port, () => {
-    logger.info(`Server is running at http://localhost:${port}`);
+    logger.info(`Server ${process.env.NAME} is running at http://localhost:${port}`);
 });
