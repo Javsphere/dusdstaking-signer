@@ -1,9 +1,9 @@
-import express, {ErrorRequestHandler} from 'express';
+import express from 'express';
 import {confirmEvmHandler, confirmEvmTranferHandler, signTxsHandler} from "./controllers/signer.controller";
-import AppError from "./utils/appError";
 import events from "events";
-import bodyParser from "body-parser";
 import cors from 'cors';
+import httpLogger from "./utils/httpLogger";
+import logger from "./utils/logger";
 
 const app = express();
 const router = express.Router();
@@ -16,8 +16,11 @@ declare module 'http' {
     }
 }
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+// 1. Body parser
+app.use(express.json({ limit: '10kb' }));
+
+// 2. Logger
+app.use(httpLogger);
 
 app.use(cors());
 
@@ -44,5 +47,5 @@ router.post('/confirmEvm', confirmEvmHandler);
 router.post('/signTxs', signTxsHandler);
 
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    logger.info(`Server is running at http://localhost:${port}`);
 });

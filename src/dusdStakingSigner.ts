@@ -1,7 +1,7 @@
 import { WalletClassic } from '@defichain/jellyfish-wallet-classic';
 import { WIF } from '@defichain/jellyfish-crypto';
 import { WhaleWalletAccount } from '@defichain/whale-api-wallet';
-import { ethers, providers } from 'ethers';
+import {ethers, logger, providers} from 'ethers';
 import MultisigWallet from 'src/libs/dmc/MultiSigWallet.json';
 import { WhaleApiClient } from '@defichain/whale-api-client';
 import { TestNet } from '@defichain/jellyfish-network';
@@ -98,7 +98,7 @@ export async function confirmEvmMultisigTransactionTransfer(
   const toAddress = decoded[0];
   const toAddressDusdValue = ethers.utils.formatEther(decoded[1]);
 
-  console.info(
+  logger.info(
     ` ${new Date().toString()} ${randomId} Transaction Details - To: ${toAddress}, Value: ${toAddressDusdValue}`
   );
 
@@ -112,11 +112,11 @@ export async function confirmEvmMultisigTransactionTransfer(
     transactionId,
     overrides
   );
-  console.info(
+  logger.info(
     ` ${new Date().toString()} ${randomId} Confirmation Transaction ${transactionId}  sent with hash: ${txResponse2.hash}`
   );
   await txResponse2.wait();
-  console.info(
+  logger.info(
     ` ${new Date().toString()} ${randomId} Transaction ${transactionId}  confirmed with hash: ${txResponse2.hash}`
   );
 }
@@ -145,11 +145,11 @@ export async function confirmEVMMultisigTransacton(
       transactionId,
       overrides
   );
-  console.info(
+  logger.info(
       ` ${new Date().toString()} ${randomId} Confirmation Transaction ${transactionId} sent with hash: ${txResponse.hash}`
   );
   await txResponse.wait();
-  console.info(
+  logger.info(
       ` ${new Date().toString()} ${randomId} Transaction ${transactionId}  confirmed with hash: ${txResponse.hash}`
   );
 }
@@ -299,7 +299,7 @@ function verifyTargetAddresses(
 
     switch (dftx.type) {
       case CAccountToAccount.OP_CODE:
-        console.log('got a2a');
+        logger.info('got a2a');
         const a2a = dftx.data as AccountToAccount;
         target = a2a.to
           .map(
