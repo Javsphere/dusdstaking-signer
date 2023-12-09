@@ -70,7 +70,7 @@ const network = TestNet;
 export async function confirmEvmMultisigTransactionTransfer(
   randomId: string,
   transactionId: string
-) {
+): Promise<string> {
   const priv2 = process.env.PRIV_KEY!;
   const wallet2 = new WalletClassic(WIF.asEllipticPair(priv2));
   const account2 = new WhaleWalletAccount(ocean, wallet2, network);
@@ -116,16 +116,13 @@ export async function confirmEvmMultisigTransactionTransfer(
   logger.info(
     ` ${new Date().toString()} ${randomId} Confirmation Transaction ${transactionId}  sent with hash: ${txResponse2.hash}`
   );
-  await txResponse2.wait();
-  logger.info(
-    ` ${new Date().toString()} ${randomId} Transaction ${transactionId}  confirmed with hash: ${txResponse2.hash}`
-  );
+  return txResponse2.hash;
 }
 
 export async function confirmEVMMultisigTransacton(
   randomId: string,
   transactionId: string
-) {
+): Promise<string> {
   ocean = getTestWhaleClient();
   const evmProvider = new providers.JsonRpcProvider(rpc);
 
@@ -149,10 +146,7 @@ export async function confirmEVMMultisigTransacton(
   logger.info(
       ` ${new Date().toString()} ${randomId} Confirmation Transaction ${transactionId} sent with hash: ${txResponse.hash}`
   );
-  await txResponse.wait();
-  logger.info(
-      ` ${new Date().toString()} ${randomId} Transaction ${transactionId}  confirmed with hash: ${txResponse.hash}`
-  );
+  return txResponse.hash;
 }
 
 export async function signTxs(

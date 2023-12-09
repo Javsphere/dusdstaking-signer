@@ -12,12 +12,13 @@ export const confirmEvmTranferHandler: RequestHandler<unknown,  unknown, EvmMult
   try {
 
     const { randomId, transactionId } = req.body;
-    const transactionString = transactionId.toString();
+    const transactionString = JSON.stringify(transactionId);
     logger.info(` ${randomId} Start signing ${transactionString} with confirmEvmMultisigTransactionTransfer ... `)
-    await confirmEvmMultisigTransactionTransfer(randomId, transactionId);
+    const tx = await confirmEvmMultisigTransactionTransfer(randomId, transactionId);
     logger.info(` ${randomId} Signing ${transactionString}  with confirmEvmMultisigTransactionTransfer ready. ` )
     res.status(200).json({
-      status: 'confirmed',
+      tx,
+      status: 'sent',
       message: `Data ${randomId} and ${transactionString}`,
 
     });
@@ -31,13 +32,14 @@ export const confirmEvmHandler: RequestHandler<unknown,  unknown, EvmMultisig>
   try {
 
     const { randomId, transactionId } = req.body;
-    const transactionString = transactionId.toString();
+    const transactionString = JSON.stringify(transactionId);
     logger.info(` ${randomId} Start signing ${transactionString} with confirmEVMMultisigTransacton ... `)
-    await confirmEVMMultisigTransacton(randomId, transactionId);
+    const tx = await confirmEVMMultisigTransacton(randomId, transactionId);
     logger.info(` ${randomId} Signing with ${transactionString}  confirmEVMMultisigTransacton ready. `)
 
     res.status(200).json({
-      status: 'confirmed',
+      tx,
+      status: 'sent',
       message: `Data ${randomId} and ${transactionString}`,
 
     });
