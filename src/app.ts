@@ -30,12 +30,14 @@ events.EventEmitter.defaultMaxListeners = 100;
 
 app.get('/', (req, res) => {
     res.send({
+        "version": packageFile.version,
         "status": 'Ready'
     });
 });
 
 app.get('/health', (req, res) => {
     res.send({
+        "version": packageFile.version,
         "status": 'Ready'
     });
 });
