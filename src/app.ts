@@ -5,6 +5,7 @@ import cors from 'cors';
 import httpLogger from "./utils/httpLogger";
 import logger from "./utils/logger";
 import process from "process";
+import packageFile from '../package.json';
 
 const app = express();
 const router = express.Router();
@@ -18,7 +19,7 @@ declare module 'http' {
 }
 
 // 1. Body parser
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '10mb' }));
 
 // 2. Logger
 app.use(httpLogger);
@@ -48,5 +49,6 @@ router.post('/confirmEvm', confirmEvmHandler);
 router.post('/signTxs', signTxsHandler);
 
 app.listen(port, () => {
+    logger.info(`Server version ${packageFile.version}`);
     logger.info(`Server ${process.env.NAME} is running at http://localhost:${port}`);
 });

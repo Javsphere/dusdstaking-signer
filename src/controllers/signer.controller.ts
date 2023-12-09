@@ -5,7 +5,7 @@ import {
   confirmEVMMultisigTransacton,
   signTxs
 } from "../dusdStakingSigner";
-import {logger} from "ethers";
+import logger from "../utils/logger";
 
 export const confirmEvmTranferHandler: RequestHandler<unknown,  unknown, EvmMultisig>
     = async (req, res, next) => {

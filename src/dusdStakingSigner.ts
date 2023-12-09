@@ -1,7 +1,7 @@
 import { WalletClassic } from '@defichain/jellyfish-wallet-classic';
 import { WIF } from '@defichain/jellyfish-crypto';
 import { WhaleWalletAccount } from '@defichain/whale-api-wallet';
-import {ethers, logger, providers} from 'ethers';
+import {ethers, providers} from 'ethers';
 import MultisigWallet from 'src/libs/dmc/MultiSigWallet.json';
 import { WhaleApiClient } from '@defichain/whale-api-client';
 import { TestNet } from '@defichain/jellyfish-network';
@@ -34,6 +34,7 @@ import {
 import { CTakeLoan } from '@defichain/jellyfish-transaction/dist/script/dftx/dftx_loans';
 import 'dotenv/config';
 import {BigNumber} from "@defichain/jellyfish-api-core";
+import logger from "./utils/logger";
 
 const multiSigAddress2 = 'tf1qkm5y2xahw6ht5v449xna3fwulutfkstx89pn0s';
 const rpc = 'https://dmc.mydefichain.com/testnet';
