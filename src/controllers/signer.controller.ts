@@ -12,12 +12,13 @@ export const confirmEvmTranferHandler: RequestHandler<unknown,  unknown, EvmMult
   try {
 
     const { randomId, transactionId } = req.body;
-    logger.info(` ${new Date().toString()} ${randomId} Start signing ${transactionId} with confirmEvmMultisigTransactionTransfer ... `)
+    const transactionString = transactionId.toString();
+    logger.info(` ${randomId} Start signing ${transactionString} with confirmEvmMultisigTransactionTransfer ... `)
     await confirmEvmMultisigTransactionTransfer(randomId, transactionId);
-    logger.info(` ${new Date().toString()} ${randomId} Signing ${transactionId}  with confirmEvmMultisigTransactionTransfer ready. ` )
+    logger.info(` ${randomId} Signing ${transactionString}  with confirmEvmMultisigTransactionTransfer ready. ` )
     res.status(200).json({
       status: 'confirmed',
-      message: `Data ${randomId} and ${transactionId}`,
+      message: `Data ${randomId} and ${transactionString}`,
 
     });
   } catch (err) {
@@ -30,13 +31,14 @@ export const confirmEvmHandler: RequestHandler<unknown,  unknown, EvmMultisig>
   try {
 
     const { randomId, transactionId } = req.body;
-    logger.info(` ${new Date().toString()} ${randomId} Start signing ${transactionId} with confirmEVMMultisigTransacton ... `)
+    const transactionString = transactionId.toString();
+    logger.info(` ${randomId} Start signing ${transactionString} with confirmEVMMultisigTransacton ... `)
     await confirmEVMMultisigTransacton(randomId, transactionId);
-    logger.info(` ${new Date().toString()} ${randomId} Signing with ${transactionId}  confirmEVMMultisigTransacton ready. `)
+    logger.info(` ${randomId} Signing with ${transactionString}  confirmEVMMultisigTransacton ready. `)
 
     res.status(200).json({
       status: 'confirmed',
-      message: `Data ${randomId} and ${transactionId}`,
+      message: `Data ${randomId} and ${transactionString}`,
 
     });
   } catch (err) {
@@ -49,9 +51,9 @@ export const signTxsHandler: RequestHandler<unknown,  SignedTXsPackage, SignTXsP
   try {
 
     const { transactions, prevPubKey, redeemScript } = req.body;
-    logger.info(` ${new Date().toString()} Start signing with signTxs ... `)
+    logger.info(` Start signing with signTxs ... `)
     const signed = await signTxs(transactions, prevPubKey, redeemScript);
-    logger.info(` ${new Date().toString()} Signing  with signTxs ready. `)
+    logger.info(` Signing  with signTxs ready. `)
 
     res.status(200).json({
       transactions: signed

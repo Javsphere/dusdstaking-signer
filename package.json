@@ -1,6 +1,6 @@
 {
   "name": "dusd-staking-signer",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Signer for Javsphere Dusd Staking",
   "main": "app.ts",
   "license": "MIT",
