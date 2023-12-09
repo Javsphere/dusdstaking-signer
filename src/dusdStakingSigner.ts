@@ -105,7 +105,7 @@ export async function confirmEvmMultisigTransactionTransfer(
 
   // Confirm the correct target address
   if (!allowedTargetsForTransfer.includes(toAddress)) {
-    const errorMessage = `${randomId} Error in confirm transaction ${transactionId} not allowed address ${toAddress}.`;
+    const errorMessage = `${randomId} Error in confirm transaction ${JSON.stringify(transactionId)} not allowed address ${toAddress}.`;
     throw new Error(`${errorMessage}`);
   }
 
@@ -114,7 +114,7 @@ export async function confirmEvmMultisigTransactionTransfer(
     overrides
   );
   logger.info(
-    ` ${new Date().toString()} ${randomId} Confirmation Transaction ${transactionId}  sent with hash: ${txResponse2.hash}`
+    ` ${new Date().toString()} ${randomId} Confirmation Transaction ${JSON.stringify(transactionId)}  sent with hash: ${txResponse2.hash}`
   );
   return txResponse2.hash;
 }
@@ -144,7 +144,7 @@ export async function confirmEVMMultisigTransacton(
       overrides
   );
   logger.info(
-      ` ${new Date().toString()} ${randomId} Confirmation Transaction ${transactionId} sent with hash: ${txResponse.hash}`
+      ` ${new Date().toString()} ${randomId} Confirmation Transaction ${JSON.stringify(transactionId)} sent with hash: ${txResponse.hash}`
   );
   return txResponse.hash;
 }
