@@ -49,7 +49,8 @@ const transferDomainAddressEVM = "0x2683f524C6477a3D84c6d1492a1b51e0B4146d36";
 
 const overrides = {
   gasLimit: ethers.BigNumber.from('3000000'),
-  gasPrice: ethers.utils.parseUnits('50', 'gwei')
+  maxFeePerGas: ethers.utils.parseUnits('50', 'gwei'),
+  maxPriorityFeePerGas: 0
 };
 
 const allowedTargetsForTransfer = [
