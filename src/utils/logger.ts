@@ -19,7 +19,7 @@ const logger = winston.createLogger({
     }),
     new SeqTransport({
       serverUrl: 'https://log.defichain-income.com',
-      apiKey: 'Ge7TCds2jfNU47r9rImZ',
+      apiKey: process.env.ENV === 'prod' ? 'AvYbwqsY8ANipVdtXAZq' : 'Ge7TCds2jfNU47r9rImZ',
       onError: (e) => {
         console.error(e);
       },

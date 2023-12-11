@@ -4,7 +4,7 @@ import { WhaleWalletAccount } from '@defichain/whale-api-wallet';
 import {ethers, providers} from 'ethers';
 import MultisigWallet from 'src/libs/dmc/MultiSigWallet.json';
 import { WhaleApiClient } from '@defichain/whale-api-client';
-import { TestNet } from '@defichain/jellyfish-network';
+import { TestNet, MainNet } from '@defichain/jellyfish-network';
 import DST20_V1 from 'src/libs/dmc/DST20_V1.json';
 import {
   AccountToAccount,
@@ -35,20 +35,38 @@ import { CTakeLoan } from '@defichain/jellyfish-transaction/dist/script/dftx/dft
 import 'dotenv/config';
 import {BigNumber} from "@defichain/jellyfish-api-core";
 import logger from "./utils/logger";
+import process from "process";
 
-const multiSigAddress2 = 'tf1qkm5y2xahw6ht5v449xna3fwulutfkstx89pn0s';
-const rpc = 'https://dmc.mydefichain.com/testnet';
-const multisigWalletSCAddress = '0x55e762e808745C2fa6FbC751653e14A8B9e7aDd4';
-const dusdStakingSCAddress = '0x16AD8BC8ed24481fEBEde9BE128ad80243942E28';
 const dusdTokenAddress = '0xFF0000000000000000000000000000000000000B';
-const multiSigAddress =
-  'tf1qtrf6nrttse02e2687aqml6l4lmdg599tsmhq29ey4aj05fzdetrsswzjv2';
 
-const transferDomainAddress = "tf1qmwl3z8dw3ljq7q729mut8fu0m24p8ncz8f46sx";
-const transferDomainAddressEVM = "0x2683f524C6477a3D84c6d1492a1b51e0B4146d36";
+const rpc = process.env.ENV === 'prod'
+    ? 'https://eth.mainnet.ocean.jellyfishsdk.com/'
+    : 'https://eth.testnet.ocean.jellyfishsdk.com/';
+
+const multisigWalletSCAddress = process.env.ENV === 'prod'
+    ? '0xe0cfb44cD4a1137fE7B1c6B495D1c6e19140ECe5'
+    : '0x55e762e808745C2fa6FbC751653e14A8B9e7aDd4';
+
+const dusdStakingSCAddress = process.env.ENV === 'prod'
+    ? '0x69732876393acD817fA8F7330837cB7C4D5D9f7E'
+    :'0x16AD8BC8ed24481fEBEde9BE128ad80243942E28';
+
+const multiSigAddress =  process.env.ENV === 'prod'
+        ? 'df1q7zkdpw6hd5wzcxudx28k72vjvpefa4pyqls2grnahhyw4u8kf0zqu2cnz6'
+        : 'tf1qtrf6nrttse02e2687aqml6l4lmdg599tsmhq29ey4aj05fzdetrsswzjv2';
+
+
+const transferDomainAddress =  process.env.ENV === 'prod'
+    ? "df1qc3utnuqg3t465khdn6ejhe2fwn3eacd84lw8kh"
+    : "tf1qmwl3z8dw3ljq7q729mut8fu0m24p8ncz8f46sx";
+
+
+const transferDomainAddressEVM =  process.env.ENV === 'prod'
+    ? "0x5B339C55eD738c47f5fd6D472b41ec878910AB69"
+    : "0x2683f524C6477a3D84c6d1492a1b51e0B4146d36";
 
 const overrides = {
-  gasLimit: ethers.BigNumber.from('3000000'),
+  gasLimit: ethers.BigNumber.from('20000000'),
   maxFeePerGas: ethers.utils.parseUnits('50', 'gwei'),
   maxPriorityFeePerGas: 0
 };
@@ -65,8 +83,9 @@ const allowedTargetsDVM = [
 
 const evmProvider = new providers.JsonRpcProvider(rpc);
 
-let ocean: WhaleApiClient;
-const network = TestNet;
+let ocean: WhaleApiClient = process.env.ENV === 'prod' ? getProdWhaleClient() : getTestWhaleClient() ;
+
+const network =  process.env.ENV === 'prod' ? MainNet : TestNet;
 
 export async function confirmEvmMultisigTransactionTransfer(
   randomId: string,
@@ -124,7 +143,6 @@ export async function confirmEVMMultisigTransacton(
   randomId: string,
   transactionId: string
 ): Promise<string> {
-  ocean = getTestWhaleClient();
   const evmProvider = new providers.JsonRpcProvider(rpc);
 
   const priv2 = process.env.PRIV_KEY!;
@@ -349,3 +367,13 @@ export function getTestWhaleClient(): WhaleApiClient {
     network: network.name,
   });
 }
+
+export function getProdWhaleClient(): WhaleApiClient {
+  return new WhaleApiClient({
+    url: 'https://mainnet.ocean.jellyfishsdk.com',
+    timeout: 120000,
+    version: 'v0',
+    network: network.name,
+  });
+}
+
