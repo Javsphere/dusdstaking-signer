@@ -82,10 +82,8 @@ const allowedTargetsDVM = [
 ];
 
 const evmProvider = new providers.JsonRpcProvider(rpc);
-
-let ocean: WhaleApiClient = process.env.ENV === 'prod' ? getProdWhaleClient() : getTestWhaleClient() ;
-
 const network =  process.env.ENV === 'prod' ? MainNet : TestNet;
+let ocean: WhaleApiClient = process.env.ENV === 'prod' ? getProdWhaleClient() : getTestWhaleClient() ;
 
 export async function confirmEvmMultisigTransactionTransfer(
   randomId: string,
