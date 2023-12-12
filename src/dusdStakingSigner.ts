@@ -268,7 +268,8 @@ export function createConfirmationSignedTx(
 ): TransactionSegWit {
   // insert new witness before redeem script
   const witnessScripts = transaction.witness[0].scripts;
-  const insertPosition = witnessScripts.length - 1;
+  const insertPosition = process.env.ENV === 'prod' ? 1 : witnessScripts.length - 1;
+
   witnessScripts.splice(insertPosition, 0, ...witnesses);
 
   return {
