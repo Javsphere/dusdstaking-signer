@@ -37,7 +37,7 @@ import {BigNumber} from "@defichain/jellyfish-api-core";
 import logger from "./utils/logger";
 import process from "process";
 
-const dusdTokenAddress = '0xFF0000000000000000000000000000000000000B';
+const dusdTokenAddress = process.env.ENV === 'prod' ? '0xFf0000000000000000000000000000000000000F' : '0xFF0000000000000000000000000000000000000B';
 
 const rpc = process.env.ENV === 'prod'
     ? 'https://eth.mainnet.ocean.jellyfishsdk.com/'
