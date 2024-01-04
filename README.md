@@ -24,6 +24,6 @@ It offers an API for various operations like confirming EVM multisig transaction
 
 ## API Endpoints
 
- - POST /api/confirmEvmTranfer: Confirm an EVM multisig transaction.
+ - POST /api/confirmEvmTransfer: Confirm an EVM multisig transaction.
  - POST /api/confirmEvm: Another method to confirm an EVM multisig transaction.
  - POST /api/signTxs: Sign transaction packages.
